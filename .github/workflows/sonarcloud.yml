@@ -24,6 +24,7 @@ jobs:
           args:
             -Dsonar.projectKey=rafaeldemiranda95_TechChallenge-Pedido
             -Dsonar.organization=rafaeldemiranda95
+            -Dsonar.scanner.force-deprecated-java-version=true
             # Caminhos separados por vírgulas para diretórios contendo arquivos-fonte principais.
             #-Dsonar.sources= # opcional, o padrão é o diretório base do projeto
             # Quando a análise precisa ocorrer em um diretório diferente daquele de onde foi iniciada
