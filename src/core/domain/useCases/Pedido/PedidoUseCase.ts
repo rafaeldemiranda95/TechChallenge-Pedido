@@ -9,30 +9,6 @@ export class PedidoUseCase {
     return response;
   }
 
-  async listarPedidos(): Promise<any> {
-    // apagar
-    return await new PedidoRepository().listar();
-  }
-
-  async listaFilas(): Promise<any> {
-    // apagar
-    return await new PedidoRepository().listagemFilas();
-  }
-
-  async trocarStatusFila(id: number, status: string): Promise<void> {
-    // apagar
-    await new PedidoRepository().trocarStatusFila(id, status);
-  }
-
-  async listaPedidosPorStatus(status: string[]): Promise<Pedido[]> {
-    // apagar
-    return await new PedidoRepository().listarPorStatus(status);
-  }
-
-  async statusPagamentoPedido(id: number): Promise<string> {
-    // apagar
-    return await new PedidoRepository().statusPagamentoPedido(id);
-  }
   async calcularTotalPedido(pedido: Pedido): Promise<number | undefined> {
     try {
       let total = 0;

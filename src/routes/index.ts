@@ -160,44 +160,4 @@ router.post(
   }
 );
 
-// Não vai utilizar
-router.get(
-  '/listarPedidos',
-  autenticacaoMiddleware(usuarioUseCase),
-  async (req, res) => {
-    let pedidoController = new PedidoController();
-    await pedidoController.listaPedidos(res);
-  }
-);
-
-router.get(
-  '/listarFilas',
-  autenticacaoMiddleware(usuarioUseCase),
-  async (req, res) => {
-    let pedidoController = new PedidoController();
-    await pedidoController.listaFilas(res);
-  }
-);
-
-router.post(
-  '/trocarStatusFila',
-  autenticacaoMiddleware(usuarioUseCase),
-  async (req, res) => {
-    let id = req.body.id;
-    let status = req.body.status;
-    let pedidoController = new PedidoController();
-    await pedidoController.trocarStatusFila(id, status, res);
-  }
-);
-
-router.get(
-  '/statusPagamentoPedido',
-  autenticacaoMiddleware(usuarioUseCase),
-  async (req, res) => {
-    let id = req.body.id;
-    let pedidoController = new PedidoController();
-    await pedidoController.statusPagamentoPedido(id, res);
-  }
-);
-
 export default router;
