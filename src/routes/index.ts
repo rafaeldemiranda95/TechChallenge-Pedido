@@ -15,7 +15,6 @@ router.post(
   '/cadastroProduto',
   autenticacaoMiddleware(usuarioUseCase),
   async (req, res) => {
-    let nome = req.body.nome;
     let categoria = req.body.categoria;
     let preco = req.body.preco;
     let descricao = req.body.descricao;

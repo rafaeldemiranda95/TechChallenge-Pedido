@@ -1,9 +1,6 @@
 {
-  "name": "techchallenge",
+  "name": "techchallenge-pedido",
   "version": "1.0.0",
-  "prisma": {
-    "seed": "ts-node prisma/seed.ts"
-  },
   "description": "",
   "main": "index.js",
   "directories": {
@@ -12,9 +9,7 @@
   "scripts": {
     "test": "",
     "build": "tsc",
-    "migrate": "prisma migrate dev --name init",
     "start": "npm run build && node dist/src/server/index.js",
-    "prisma": "npx prisma migrate dev && npx prisma db seed && npm run start",
     "dev": "nodemon src/server/index.ts"
   },
   "author": "",
