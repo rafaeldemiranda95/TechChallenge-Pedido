@@ -1,8 +1,8 @@
-import { Pedido } from '../../../core/domain/models/Pedido';
-import { Usuario } from '../../../core/domain/models/Usuario';
-import { PedidoRepository } from './PedidoRepository';
+import { PedidoRepository } from '../src/adapter/driven/infra/PedidoRepository';
+import { Pedido } from '../src/core/domain/models/Pedido';
+import { Usuario } from '../src/core/domain/models/Usuario';
 
-jest.mock('./../../../config/database', () => ({
+jest.mock('../src/config/database', () => ({
   runQuery: jest.fn(),
 }));
 describe('PedidoRepository', () => {
@@ -22,11 +22,11 @@ describe('PedidoRepository', () => {
         100,
         1
       );
-      require('../../../config/database').runQuery.mockResolvedValueOnce([]);
+      require('../src/config/database').runQuery.mockResolvedValueOnce([]);
 
       await pedidoRepository.enviarParaFila(mockPedido);
 
-      expect(require('../../../config/database').runQuery).toHaveBeenCalledWith(
+      expect(require('../src/config/database').runQuery).toHaveBeenCalledWith(
         expect.stringContaining('INSERT INTO public.fila')
       );
     });
@@ -40,7 +40,7 @@ describe('PedidoRepository', () => {
         1
       );
       const errorMessage = 'Erro ao inserir na fila';
-      require('../../../config/database').runQuery.mockRejectedValueOnce(
+      require('../src/config/database').runQuery.mockRejectedValueOnce(
         new Error(errorMessage)
       );
 
@@ -60,15 +60,15 @@ describe('PedidoRepository', () => {
       const mockResponseProduto = [
         { pedidoId: 1, produtoId: 10, quantidade: 2 },
       ];
-      require('../../../config/database')
+      require('../src/config/database')
         .runQuery.mockResolvedValueOnce(mockResponsePedido)
         .mockResolvedValueOnce(mockResponseProduto);
 
       const resultado = await pedidoRepository.salvar(mockPedido);
 
-      expect(
-        require('../../../config/database').runQuery
-      ).toHaveBeenCalledTimes(3);
+      expect(require('../src/config/database').runQuery).toHaveBeenCalledTimes(
+        3
+      );
       expect(resultado).toEqual({
         tempoEspera: mockPedido.tempoEspera,
         status: mockPedido.status,
@@ -85,7 +85,7 @@ describe('PedidoRepository', () => {
         10
       );
       const errorMessage = 'Erro ao inserir pedido';
-      require('../../../config/database').runQuery.mockRejectedValueOnce(
+      require('../src/config/database').runQuery.mockRejectedValueOnce(
         new Error(errorMessage)
       );
 

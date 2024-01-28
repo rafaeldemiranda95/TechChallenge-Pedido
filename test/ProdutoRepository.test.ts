@@ -1,8 +1,8 @@
-import { Produto } from '../../../core/domain/models/Produto';
-import { ProdutoRepository } from './ProdutoRepository';
+import { ProdutoRepository } from '../src/adapter/driven/infra/ProdutoRepository';
+import { Produto } from '../src/core/domain/models/Produto';
 
 // Mocking da função runQuery
-jest.mock('../../../config/database', () => ({
+jest.mock('../src/config/database', () => ({
   runQuery: jest.fn(),
 }));
 
@@ -33,13 +33,13 @@ describe('ProdutoRepository - exibirLista', () => {
           'imagem2.jpg'
         ),
       ];
-      require('../../../config/database').runQuery.mockResolvedValueOnce(
+      require('../src/config/database').runQuery.mockResolvedValueOnce(
         mockProdutos
       );
 
       const produtos = await produtoRepository.exibirLista();
 
-      expect(require('../../../config/database').runQuery).toHaveBeenCalledWith(
+      expect(require('../src/config/database').runQuery).toHaveBeenCalledWith(
         'SELECT * FROM produto'
       );
       expect(produtos).toEqual(mockProdutos);
@@ -47,7 +47,7 @@ describe('ProdutoRepository - exibirLista', () => {
 
     it('deve tratar erro na consulta ao banco de dados', async () => {
       const errorMessage = 'Erro ao buscar produtos';
-      require('../../../config/database').runQuery.mockRejectedValueOnce(
+      require('../src/config/database').runQuery.mockRejectedValueOnce(
         new Error(errorMessage)
       );
 
@@ -64,13 +64,13 @@ describe('ProdutoRepository - exibirLista', () => {
         new Produto('Produto 1', categoria, 10.0, 'Descrição 1', 'imagem1.jpg'),
         new Produto('Produto 2', categoria, 20.0, 'Descrição 2', 'imagem2.jpg'),
       ];
-      require('../../../config/database').runQuery.mockResolvedValueOnce(
+      require('../src/config/database').runQuery.mockResolvedValueOnce(
         mockProdutos
       );
 
       const produtos = await produtoRepository.exibirPorCategoria(categoria);
 
-      expect(require('../../../config/database').runQuery).toHaveBeenCalledWith(
+      expect(require('../src/config/database').runQuery).toHaveBeenCalledWith(
         `SELECT * FROM produto WHERE categoria = '${categoria}'`
       );
       expect(produtos).toEqual(mockProdutos);
@@ -79,7 +79,7 @@ describe('ProdutoRepository - exibirLista', () => {
     it('deve tratar erro na consulta ao banco de dados por categoria', async () => {
       const categoria = 'Categoria Teste';
       const errorMessage = 'Erro ao buscar produtos';
-      require('../../../config/database').runQuery.mockRejectedValueOnce(
+      require('../src/config/database').runQuery.mockRejectedValueOnce(
         new Error(errorMessage)
       );
 
@@ -100,13 +100,13 @@ describe('ProdutoRepository - exibirLista', () => {
         undefined,
         id
       );
-      require('../../../config/database').runQuery.mockResolvedValueOnce([
+      require('../src/config/database').runQuery.mockResolvedValueOnce([
         mockProduto,
       ]);
 
       const produto = await produtoRepository.exibirPorId(id);
 
-      expect(require('../../../config/database').runQuery).toHaveBeenCalledWith(
+      expect(require('../src/config/database').runQuery).toHaveBeenCalledWith(
         `SELECT * FROM public.produto WHERE id = ${id}`
       );
       expect(produto).toEqual(mockProduto);
@@ -115,7 +115,7 @@ describe('ProdutoRepository - exibirLista', () => {
     it('deve tratar erro na consulta ao banco de dados por ID', async () => {
       const id = 1;
       const errorMessage = 'Erro ao buscar produto';
-      require('../../../config/database').runQuery.mockRejectedValueOnce(
+      require('../src/config/database').runQuery.mockRejectedValueOnce(
         new Error(errorMessage)
       );
 
@@ -126,7 +126,7 @@ describe('ProdutoRepository - exibirLista', () => {
 
     it('deve retornar undefined quando nenhum produto é encontrado', async () => {
       const id = 99;
-      require('../../../config/database').runQuery.mockResolvedValueOnce([]);
+      require('../src/config/database').runQuery.mockResolvedValueOnce([]);
 
       const produto = await produtoRepository.exibirPorId(id);
 
@@ -143,13 +143,13 @@ describe('ProdutoRepository - exibirLista', () => {
         'Descrição Teste',
         'imagemteste.jpg'
       );
-      require('../../../config/database').runQuery.mockResolvedValueOnce([
+      require('../src/config/database').runQuery.mockResolvedValueOnce([
         mockProduto,
       ]);
 
       const produtoSalvo = await produtoRepository.salvar(mockProduto);
 
-      expect(require('../../../config/database').runQuery).toHaveBeenCalledWith(
+      expect(require('../src/config/database').runQuery).toHaveBeenCalledWith(
         expect.stringContaining('INSERT INTO public.produto')
       );
       expect(produtoSalvo).toEqual(mockProduto);
@@ -164,7 +164,7 @@ describe('ProdutoRepository - exibirLista', () => {
         'imagemteste.jpg'
       );
       const errorMessage = 'Erro ao inserir produto';
-      require('../../../config/database').runQuery.mockRejectedValueOnce(
+      require('../src/config/database').runQuery.mockRejectedValueOnce(
         new Error(errorMessage)
       );
 
@@ -181,7 +181,7 @@ describe('ProdutoRepository - exibirLista', () => {
         'Descrição Teste',
         'imagemteste.jpg'
       );
-      require('../../../config/database').runQuery.mockResolvedValueOnce([]);
+      require('../src/config/database').runQuery.mockResolvedValueOnce([]);
 
       const produtoSalvo = await produtoRepository.salvar(mockProduto);
 
@@ -200,7 +200,7 @@ describe('ProdutoRepository - exibirLista', () => {
         undefined,
         1
       );
-      require('../../../config/database').runQuery.mockResolvedValueOnce([
+      require('../src/config/database').runQuery.mockResolvedValueOnce([
         mockProduto,
       ]);
 
@@ -212,7 +212,7 @@ describe('ProdutoRepository - exibirLista', () => {
           's'
         )
       );
-      expect(require('../../../config/database').runQuery).toHaveBeenCalledWith(
+      expect(require('../src/config/database').runQuery).toHaveBeenCalledWith(
         expectedQuery
       );
       expect(produtoAlterado).toEqual(mockProduto);
@@ -229,7 +229,7 @@ describe('ProdutoRepository - exibirLista', () => {
         1
       );
       const errorMessage = 'Erro ao atualizar produto';
-      require('../../../config/database').runQuery.mockRejectedValueOnce(
+      require('../src/config/database').runQuery.mockRejectedValueOnce(
         new Error(errorMessage)
       );
 
@@ -251,7 +251,7 @@ describe('ProdutoRepository - exibirLista', () => {
         undefined,
         id
       );
-      require('../../../config/database').runQuery.mockResolvedValueOnce([
+      require('../src/config/database').runQuery.mockResolvedValueOnce([
         mockProduto,
       ]);
 
@@ -269,7 +269,7 @@ describe('ProdutoRepository - exibirLista', () => {
     it('deve tratar erro na remoção do produto', async () => {
       const id = 1;
       const errorMessage = 'Erro ao remover produto';
-      require('../../../config/database').runQuery.mockRejectedValueOnce(
+      require('../src/config/database').runQuery.mockRejectedValueOnce(
         new Error(errorMessage)
       );
 
@@ -278,7 +278,7 @@ describe('ProdutoRepository - exibirLista', () => {
 
     it('deve retornar undefined quando nenhum produto é removido', async () => {
       const id = 99;
-      require('../../../config/database').runQuery.mockResolvedValueOnce([]);
+      require('../src/config/database').runQuery.mockResolvedValueOnce([]);
 
       const produtoRemovido = await produtoRepository.apagar(id);
 
