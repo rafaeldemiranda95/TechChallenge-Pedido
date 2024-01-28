@@ -1,34 +1,11 @@
-import { IUsuarioUseCase } from '../../../core/domain/useCases/Usuario/IUsuarioUseCase';
+import { runQuery } from '../../../config/database';
 import { Usuario } from '../../../core/domain/models/Usuario';
-import { runQuery, prisma } from '../../../config/database';
-import { VerificaSenha } from '../../../core/domain/valueObjects/VerificaSenha';
+import { IUsuarioUseCase } from '../../../core/domain/useCases/Usuario/IUsuarioUseCase';
 import { GerarHash } from '../../../core/domain/valueObjects/GerarHash';
+import { VerificaSenha } from '../../../core/domain/valueObjects/VerificaSenha';
 var jwt = require('jsonwebtoken');
 
 export class UsuarioRepository implements IUsuarioUseCase {
-  // async obterUsuarioPorId(id: number): Promise<Usuario | undefined> {
-  //   try {
-  //     let usuario = await prisma.usuario.findUnique({
-  //       where: { id: id },
-  //     });
-  //     if (usuario) {
-  //       return new Usuario(
-  //         usuario.nome,
-  //         usuario.email,
-  //         usuario.cpf,
-  //         usuario.tipo,
-  //         undefined,
-  //         undefined,
-  //         usuario.id
-  //       );
-  //     } else {
-  //       return undefined;
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-
   async obterUsuarioPorId(id: number): Promise<Usuario | undefined> {
     try {
       const query = `SELECT * FROM usuario WHERE id = ${id}`;
@@ -36,7 +13,7 @@ export class UsuarioRepository implements IUsuarioUseCase {
 
       const result = await runQuery(query);
 
-      console.log('result  ==>>  ', result);
+      // console.log('result  ==>>  ', result);
 
       if (result.length > 0) {
         const usuario = result[0];
@@ -53,7 +30,7 @@ export class UsuarioRepository implements IUsuarioUseCase {
         return undefined;
       }
     } catch (error) {
-      console.error(error);
+      throw error;
     }
   }
 
@@ -70,10 +47,10 @@ export class UsuarioRepository implements IUsuarioUseCase {
       let token = jwt.sign({ id: getUsuarioDb.id }, process.env.JWT_SECRET, {
         expiresIn: null,
       });
-      await prisma.usuario.update({
-        where: { id: getUsuarioDb.id },
-        data: { token: token },
-      });
+      // await prisma.usuario.update({
+      //   where: { id: getUsuarioDb.id },
+      //   data: { token: token },
+      // });
       return token;
     } else {
       return undefined;
@@ -96,48 +73,44 @@ export class UsuarioRepository implements IUsuarioUseCase {
   }
 
   async autenticaAdministrador(usuario: Usuario): Promise<string | undefined> {
-    // let getUsuarioDb = await prisma.usuario.findUnique({
-    //   where: {
-    //     email: usuario.email,
-    //   },
-    // });
+    try {
+      let query = `select * from public.usuario where email = '${usuario.email}'`;
+      let _getUsuarioDb = await runQuery(query);
+      // console.log(_getUsuarioDb);
 
-    let query = `select * from public.usuario where email = '${usuario.email}'`;
-    let _getUsuarioDb = await runQuery(query);
-    console.log(_getUsuarioDb);
+      if (_getUsuarioDb.length > 0) {
+        let getUsuarioDb = _getUsuarioDb[0];
+        if (usuario.senha != undefined && getUsuarioDb.senha != undefined) {
+          let validaSenha = new VerificaSenha();
+          if (validaSenha) {
+            let token = jwt.sign(
+              {
+                id: getUsuarioDb.id,
+                nome: getUsuarioDb.nome,
+                email: getUsuarioDb.email,
+                tipo: getUsuarioDb.tipo,
+              },
+              process.env.JWT_SECRET,
+              {
+                expiresIn: '365d',
+              }
+            );
+            // await prisma.usuario.update({
+            //   where: { id: getUsuarioDb.id },
+            //   data: { token: token },
+            // });
 
-    if (_getUsuarioDb.length > 0) {
-      let getUsuarioDb = _getUsuarioDb[0];
-      if (usuario.senha != undefined && getUsuarioDb.senha != undefined) {
-        let validaSenha = new VerificaSenha(usuario.senha, getUsuarioDb.senha);
-        if (validaSenha) {
-          let token = jwt.sign(
-            {
-              id: getUsuarioDb.id,
-              nome: getUsuarioDb.nome,
-              email: getUsuarioDb.email,
-              tipo: getUsuarioDb.tipo,
-            },
-            process.env.JWT_SECRET,
-            {
-              expiresIn: '365d',
-            }
-          );
-          // await prisma.usuario.update({
-          //   where: { id: getUsuarioDb.id },
-          //   data: { token: token },
-          // });
-
-          let saveQuery = `UPDATE public.usuario SET token = '${token}' where id = ${getUsuarioDb.id};`;
-          await runQuery(saveQuery);
-          return token;
+            let saveQuery = `UPDATE public.usuario SET token = '${token}' where id = ${getUsuarioDb.id};`;
+            await runQuery(saveQuery);
+            return token;
+          }
+        } else {
+          return undefined;
         }
-      } else {
-        return undefined;
       }
+    } catch (err: any) {
+      throw err;
     }
-
-    return undefined;
   }
 
   async autenticaCliente(usuario: Usuario): Promise<string | undefined> {
@@ -164,7 +137,7 @@ export class UsuarioRepository implements IUsuarioUseCase {
         return token;
       }
     } catch (error: any) {
-      throw new Error(error);
+      throw error;
     }
   }
 
@@ -186,28 +159,5 @@ export class UsuarioRepository implements IUsuarioUseCase {
     } else {
       throw new Error('Usuário não encontrado');
     }
-    // return prisma.usuario
-    // .create({
-    //   data: {
-    //     nome: usuario.nome,
-    //     email: usuario.email,
-    //     cpf: usuario.cpf,
-    //     tipo: usuario.tipo,
-    //     senha:
-    //       usuario.senha == undefined
-    //         ? null
-    //         : await gerarSenha.gerarHash(usuario.senha),
-    //   },
-    // })
-    // .then((usuario: any) => {
-    //   return usuario;
-    // })
-    // .catch((error: any) => {
-    //   let errorType = JSON.stringify({
-    //     code: error.code,
-    //     field: error.meta.target[0],
-    //   });
-    //   throw new Error(errorType);
-    // });
   }
 }
