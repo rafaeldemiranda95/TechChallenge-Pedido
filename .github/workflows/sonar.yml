@@ -35,4 +35,4 @@ jobs:
             -Dsonar.organization=rafaeldemiranda95
             -Dsonar.scanner.force-deprecated-java-version=true
             -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
-            -Dsonar.exclusions=**/*, !src/**/*
+            # -Dsonar.exclusions=**/*, !src/**/*
