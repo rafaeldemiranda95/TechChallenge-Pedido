@@ -1,10 +1,16 @@
-import { Usuario } from '../../../domain/models/Usuario';
 import { UsuarioRepository } from '../../../../adapter/driven/infra/UsuarioRepository';
+import { Usuario } from '../../../domain/models/Usuario';
 
 export class UsuarioUseCase {
+  usuarioRepository: UsuarioRepository;
+
+  constructor(usuarioRepository: UsuarioRepository) {
+    this.usuarioRepository = usuarioRepository;
+  }
+
   async cadastraUsuario(usuario: Usuario, res: any) {
     try {
-      await new UsuarioRepository().salvar(usuario);
+      await this.usuarioRepository.salvar(usuario);
     } catch (error: any) {
       throw new Error(error.message);
     }
@@ -12,7 +18,7 @@ export class UsuarioUseCase {
 
   async cadastraAdministrador(usuario: Usuario, res: any) {
     try {
-      await new UsuarioRepository().salvar(usuario);
+      await this.usuarioRepository.salvar(usuario);
     } catch (error: any) {
       let errorType = JSON.parse(error.message);
       if (errorType.code == 'P2002') {
@@ -23,8 +29,9 @@ export class UsuarioUseCase {
 
   async autenticaAdministrador(usuario: Usuario, res: any) {
     try {
-      let verificaUsuario =
-        await new UsuarioRepository().autenticaAdministrador(usuario);
+      let verificaUsuario = await this.usuarioRepository.autenticaAdministrador(
+        usuario
+      );
       if (verificaUsuario == undefined) {
         res.status(400).send('Usuário não encontrado');
       } else {
@@ -36,7 +43,7 @@ export class UsuarioUseCase {
   }
   async autenticaCliente(usuario: Usuario, res: any) {
     try {
-      let verificaUsuario = await new UsuarioRepository().autenticaCliente(
+      let verificaUsuario = await this.usuarioRepository.autenticaCliente(
         usuario
       );
       if (verificaUsuario == undefined) {
@@ -51,7 +58,7 @@ export class UsuarioUseCase {
 
   async validarToken(token: string) {
     try {
-      let tokenValido = await new UsuarioRepository().validarToken(token);
+      let tokenValido = await this.usuarioRepository.validarToken(token);
       return tokenValido;
     } catch (error: any) {
       console.log(error);

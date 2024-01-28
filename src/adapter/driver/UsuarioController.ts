@@ -1,5 +1,5 @@
-import { UsuarioUseCase } from '../../core/domain/useCases/Usuario/UsuarioUseCase';
 import { Usuario } from '../../core/domain/models/Usuario';
+import { UsuarioUseCase } from '../../core/domain/useCases/Usuario/UsuarioUseCase';
 import { CPF } from '../../core/domain/valueObjects/cpf';
 export class UsuarioController {
   async cadastrarCliente(nome: string, email: string, cpf: string, res: any) {
@@ -48,6 +48,7 @@ export class UsuarioController {
       await new UsuarioUseCase().autenticaAdministrador(usuario, res);
     } catch (error: any) {
       console.log(error);
+      throw 'Erro de autenticação do administrador';
     }
   }
   async autenticaCliente(cpf: string, res: any) {
@@ -56,6 +57,7 @@ export class UsuarioController {
       await new UsuarioUseCase().autenticaCliente(usuario, res);
     } catch (error: any) {
       console.log(error);
+      throw 'Erro de autenticação do cliente';
     }
   }
 }
