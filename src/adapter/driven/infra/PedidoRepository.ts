@@ -4,9 +4,8 @@ import { runQuery } from './../../../config/database';
 export class PedidoRepository implements IPedidoUseCase {
   async enviarParaFila(pedido: Pedido): Promise<void> {
     try {
-      let query = `INSERT INTO public.fila(pedidoId, status, usuarioId) VALUES (${
-        pedido.id ? pedido.id : 0
-      }, ${pedido.status}, ${pedido.usuario.id})`;
+      let query = `INSERT INTO public.fila(pedidoId, status, usuarioId) VALUES (${pedido.id ? pedido.id : 0
+        }, ${pedido.status}, ${pedido.usuario.id})`;
       await runQuery(query);
     } catch (error: any) {
       console.log('error', error);
@@ -18,6 +17,9 @@ export class PedidoRepository implements IPedidoUseCase {
       VALUES ('${pedido.status}', ${pedido.usuario.id}, ${pedido.total}, ${pedido.tempoEspera}) RETURNING *`;
       let _pedidoInsert = await runQuery(query);
 
+      // console.log('_pedidoInsert  ==>>  ', _pedidoInsert);
+      // console.log('_pedidoInsert  ==>>  ', _pedidoInsert);
+      // console.log('_pedidoInsert  ==>>  ', _pedidoInsert);
       // console.log('_pedidoInsert  ==>>  ', _pedidoInsert);
 
       if (_pedidoInsert.length > 0) {

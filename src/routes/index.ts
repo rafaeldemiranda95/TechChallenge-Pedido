@@ -55,6 +55,17 @@ router.get(
 );
 
 router.get(
+  '/teste',
+  autenticacaoMiddleware(usuarioUseCase),
+  async (req, res) => {
+    let id = req.body.id;
+    const produtoController = new ProdutoController();
+    let listaDeProdutos = await produtoController.exibirProdutoPorId(id, res);
+    res.status(200).send(listaDeProdutos);
+  }
+);
+
+router.get(
   '/exibeProdutosPorCategoria',
   autenticacaoMiddleware(usuarioUseCase),
   async (req, res) => {
