@@ -10,7 +10,7 @@ const usuarioUseCase = new UsuarioUseCase();
 router.get('/', (req, res) => {
   res.status(200).send('OK');
 });
-router.get('/test', (req, res) => {
+router.get('/', (req, res) => {
   res.status(200).send('OK');
 });
 
