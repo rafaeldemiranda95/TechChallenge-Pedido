@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1706485650886" clover="3.2.0">
-  <project timestamp="1706485650886" name="All files">
-    <metrics statements="126" coveredstatements="120" conditionals="28" coveredconditionals="23" methods="18" coveredmethods="17" elements="172" coveredelements="160" complexity="0" loc="126" ncloc="126" packages="3" files="7" classes="7"/>
+<coverage generated="1706485942049" clover="3.2.0">
+  <project timestamp="1706485942049" name="All files">
+    <metrics statements="169" coveredstatements="143" conditionals="38" coveredconditionals="25" methods="32" coveredmethods="28" elements="239" coveredelements="196" complexity="0" loc="169" ncloc="169" packages="5" files="10" classes="10"/>
     <package name="adapter.driven.infra">
       <metrics statements="99" coveredstatements="97" conditionals="28" coveredconditionals="23" methods="14" coveredmethods="14"/>
       <file name="PedidoRepository.ts" path="C:\Users\airton.junior\Documents\GitHub\TechChallenge-Pedido\src\adapter\driven\infra\PedidoRepository.ts">
@@ -114,15 +114,15 @@
       </file>
     </package>
     <package name="config">
-      <metrics statements="6" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+      <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
       <file name="database.ts" path="C:\Users\airton.junior\Documents\GitHub\TechChallenge-Pedido\src\config\database.ts">
-        <metrics statements="6" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="4" count="1" type="stmt"/>
-        <line num="12" count="1" type="stmt"/>
-        <line num="13" count="0" type="stmt"/>
-        <line num="14" count="0" type="stmt"/>
-        <line num="15" count="0" type="stmt"/>
-        <line num="17" count="0" type="stmt"/>
+        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="14" count="2" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
       </file>
     </package>
     <package name="core.domain.models">
@@ -149,13 +149,71 @@
       </file>
       <file name="Usuario.ts" path="C:\Users\airton.junior\Documents\GitHub\TechChallenge-Pedido\src\core\domain\models\Usuario.ts">
         <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-        <line num="19" count="12" type="stmt"/>
-        <line num="20" count="12" type="stmt"/>
-        <line num="21" count="12" type="stmt"/>
-        <line num="22" count="12" type="stmt"/>
-        <line num="23" count="12" type="stmt"/>
-        <line num="24" count="12" type="stmt"/>
-        <line num="25" count="12" type="stmt"/>
+        <line num="19" count="13" type="stmt"/>
+        <line num="20" count="13" type="stmt"/>
+        <line num="21" count="13" type="stmt"/>
+        <line num="22" count="13" type="stmt"/>
+        <line num="23" count="13" type="stmt"/>
+        <line num="24" count="13" type="stmt"/>
+        <line num="25" count="13" type="stmt"/>
+      </file>
+    </package>
+    <package name="core.domain.useCases.Usuario">
+      <metrics statements="25" coveredstatements="3" conditionals="6" coveredconditionals="0" methods="6" coveredmethods="2"/>
+      <file name="UsuarioUseCase.ts" path="C:\Users\airton.junior\Documents\GitHub\TechChallenge-Pedido\src\core\domain\useCases\Usuario\UsuarioUseCase.ts">
+        <metrics statements="25" coveredstatements="3" conditionals="6" coveredconditionals="0" methods="6" coveredmethods="2"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="20" count="0" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="23" count="0" type="stmt"/>
+        <line num="24" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="25" count="0" type="stmt"/>
+        <line num="31" count="0" type="stmt"/>
+        <line num="32" count="0" type="stmt"/>
+        <line num="35" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="36" count="0" type="stmt"/>
+        <line num="38" count="0" type="stmt"/>
+        <line num="41" count="0" type="stmt"/>
+        <line num="45" count="0" type="stmt"/>
+        <line num="46" count="0" type="stmt"/>
+        <line num="49" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="50" count="0" type="stmt"/>
+        <line num="52" count="0" type="stmt"/>
+        <line num="55" count="0" type="stmt"/>
+        <line num="60" count="0" type="stmt"/>
+        <line num="61" count="0" type="stmt"/>
+        <line num="62" count="0" type="stmt"/>
+        <line num="64" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="core.domain.valueObjects">
+      <metrics statements="18" coveredstatements="16" conditionals="4" coveredconditionals="2" methods="8" coveredmethods="8"/>
+      <file name="GerarHash.ts" path="C:\Users\airton.junior\Documents\GitHub\TechChallenge-Pedido\src\core\domain\valueObjects\GerarHash.ts">
+        <metrics statements="9" coveredstatements="8" conditionals="2" coveredconditionals="1" methods="4" coveredmethods="4"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="32" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="33" count="0" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+      </file>
+      <file name="VerificaSenha.ts" path="C:\Users\airton.junior\Documents\GitHub\TechChallenge-Pedido\src\core\domain\valueObjects\VerificaSenha.ts">
+        <metrics statements="9" coveredstatements="8" conditionals="2" coveredconditionals="1" methods="4" coveredmethods="4"/>
+        <line num="9" count="3" type="stmt"/>
+        <line num="10" count="3" type="stmt"/>
+        <line num="17" count="2" type="stmt"/>
+        <line num="18" count="2" type="stmt"/>
+        <line num="28" count="3" type="stmt"/>
+        <line num="29" count="3" type="stmt"/>
+        <line num="36" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="37" count="0" type="stmt"/>
+        <line num="39" count="2" type="stmt"/>
       </file>
     </package>
   </project>

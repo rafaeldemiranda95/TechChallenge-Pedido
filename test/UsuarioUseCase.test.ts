@@ -1,9 +1,9 @@
-import { UsuarioRepository } from '../../../../adapter/driven/infra/UsuarioRepository';
-import { Usuario } from '../../models/Usuario';
-import { UsuarioUseCase } from './UsuarioUseCase';
+import { UsuarioRepository } from '../src/adapter/driven/infra/UsuarioRepository';
+import { Usuario } from '../src/core/domain/models/Usuario';
+import { UsuarioUseCase } from '../src/core/domain/useCases/Usuario/UsuarioUseCase';
 
 // Continua com o mocking da classe UsuarioRepository
-jest.mock('../../../../adapter/driven/infra/UsuarioRepository', () => {
+jest.mock('../src/adapter/driven/infra/UsuarioRepository', () => {
   return {
     UsuarioRepository: jest.fn().mockImplementation(() => {
       return {

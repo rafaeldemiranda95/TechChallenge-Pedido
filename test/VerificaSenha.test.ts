@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import { VerificaSenha } from './VerificaSenha';
+import { VerificaSenha } from '../src/core/domain/valueObjects/VerificaSenha';
 
 describe('VerificaSenha', () => {
   let verificaSenha: VerificaSenha;
