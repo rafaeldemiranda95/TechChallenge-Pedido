@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1706479793488" clover="3.2.0">
-  <project timestamp="1706479793488" name="All files">
-    <metrics statements="135" coveredstatements="132" conditionals="30" coveredconditionals="24" methods="22" coveredmethods="22" elements="187" coveredelements="178" complexity="0" loc="135" ncloc="135" packages="4" files="8" classes="8"/>
+<coverage generated="1706481730882" clover="3.2.0">
+  <project timestamp="1706481730882" name="All files">
+    <metrics statements="144" coveredstatements="140" conditionals="32" coveredconditionals="25" methods="26" coveredmethods="26" elements="202" coveredelements="191" complexity="0" loc="144" ncloc="144" packages="4" files="9" classes="9"/>
     <package name="adapter.driven.infra">
       <metrics statements="99" coveredstatements="97" conditionals="28" coveredconditionals="23" methods="14" coveredmethods="14"/>
-      <file name="PedidoRepository.ts" path="C:\Users\airton.junior\Documents\GitHub\TechChallenge-Pedido\src\adapter\driven\infra\PedidoRepository.ts">
+      <file name="PedidoRepository.ts" path="C:\Users\rafae\OneDrive\Documentos\projetos\TechChallenge-Pedido\src\adapter\driven\infra\PedidoRepository.ts">
         <metrics statements="18" coveredstatements="18" conditionals="6" coveredconditionals="3" methods="2" coveredmethods="2"/>
         <line num="6" count="3" type="stmt"/>
         <line num="7" count="3" type="stmt"/>
@@ -25,7 +25,7 @@
         <line num="41" count="1" type="stmt"/>
         <line num="44" count="1" type="stmt"/>
       </file>
-      <file name="ProdutoRepository.ts" path="C:\Users\airton.junior\Documents\GitHub\TechChallenge-Pedido\src\adapter\driven\infra\ProdutoRepository.ts">
+      <file name="ProdutoRepository.ts" path="C:\Users\rafae\OneDrive\Documentos\projetos\TechChallenge-Pedido\src\adapter\driven\infra\ProdutoRepository.ts">
         <metrics statements="29" coveredstatements="29" conditionals="2" coveredconditionals="2" methods="6" coveredmethods="6"/>
         <line num="7" count="2" type="stmt"/>
         <line num="8" count="2" type="stmt"/>
@@ -57,7 +57,7 @@
         <line num="63" count="2" type="stmt"/>
         <line num="64" count="2" type="stmt"/>
       </file>
-      <file name="UsuarioRepository.ts" path="C:\Users\airton.junior\Documents\GitHub\TechChallenge-Pedido\src\adapter\driven\infra\UsuarioRepository.ts">
+      <file name="UsuarioRepository.ts" path="C:\Users\rafae\OneDrive\Documentos\projetos\TechChallenge-Pedido\src\adapter\driven\infra\UsuarioRepository.ts">
         <metrics statements="52" coveredstatements="50" conditionals="20" coveredconditionals="18" methods="6" coveredmethods="6"/>
         <line num="6" count="1" type="stmt"/>
         <line num="10" count="3" type="stmt"/>
@@ -115,7 +115,7 @@
     </package>
     <package name="config">
       <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-      <file name="database.ts" path="C:\Users\airton.junior\Documents\GitHub\TechChallenge-Pedido\src\config\database.ts">
+      <file name="database.ts" path="C:\Users\rafae\OneDrive\Documentos\projetos\TechChallenge-Pedido\src\config\database.ts">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="4" count="2" type="stmt"/>
         <line num="12" count="2" type="stmt"/>
@@ -127,7 +127,7 @@
     </package>
     <package name="core.domain.models">
       <metrics statements="21" coveredstatements="21" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
-      <file name="Pedido.ts" path="C:\Users\airton.junior\Documents\GitHub\TechChallenge-Pedido\src\core\domain\models\Pedido.ts">
+      <file name="Pedido.ts" path="C:\Users\rafae\OneDrive\Documentos\projetos\TechChallenge-Pedido\src\core\domain\models\Pedido.ts">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="18" count="4" type="stmt"/>
         <line num="19" count="4" type="stmt"/>
@@ -136,7 +136,7 @@
         <line num="22" count="4" type="stmt"/>
         <line num="23" count="4" type="stmt"/>
       </file>
-      <file name="Produto.ts" path="C:\Users\airton.junior\Documents\GitHub\TechChallenge-Pedido\src\core\domain\models\Produto.ts">
+      <file name="Produto.ts" path="C:\Users\rafae\OneDrive\Documentos\projetos\TechChallenge-Pedido\src\core\domain\models\Produto.ts">
         <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="21" count="11" type="stmt"/>
         <line num="22" count="11" type="stmt"/>
@@ -147,7 +147,7 @@
         <line num="27" count="11" type="stmt"/>
         <line num="28" count="11" type="stmt"/>
       </file>
-      <file name="Usuario.ts" path="C:\Users\airton.junior\Documents\GitHub\TechChallenge-Pedido\src\core\domain\models\Usuario.ts">
+      <file name="Usuario.ts" path="C:\Users\rafae\OneDrive\Documentos\projetos\TechChallenge-Pedido\src\core\domain\models\Usuario.ts">
         <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="19" count="12" type="stmt"/>
         <line num="20" count="12" type="stmt"/>
@@ -159,8 +159,20 @@
       </file>
     </package>
     <package name="core.domain.valueObjects">
-      <metrics statements="9" coveredstatements="8" conditionals="2" coveredconditionals="1" methods="4" coveredmethods="4"/>
-      <file name="VerificaSenha.ts" path="C:\Users\airton.junior\Documents\GitHub\TechChallenge-Pedido\src\core\domain\valueObjects\VerificaSenha.ts">
+      <metrics statements="18" coveredstatements="16" conditionals="4" coveredconditionals="2" methods="8" coveredmethods="8"/>
+      <file name="GerarHash.ts" path="C:\Users\rafae\OneDrive\Documentos\projetos\TechChallenge-Pedido\src\core\domain\valueObjects\GerarHash.ts">
+        <metrics statements="9" coveredstatements="8" conditionals="2" coveredconditionals="1" methods="4" coveredmethods="4"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="32" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="33" count="0" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+      </file>
+      <file name="VerificaSenha.ts" path="C:\Users\rafae\OneDrive\Documentos\projetos\TechChallenge-Pedido\src\core\domain\valueObjects\VerificaSenha.ts">
         <metrics statements="9" coveredstatements="8" conditionals="2" coveredconditionals="1" methods="4" coveredmethods="4"/>
         <line num="9" count="3" type="stmt"/>
         <line num="10" count="3" type="stmt"/>
