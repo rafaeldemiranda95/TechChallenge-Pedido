@@ -5,5 +5,22 @@ router.get('/', (req, res) => {
   res.status(200).send('OK');
 });
 
+router.get('/', (req, res) => {
+  res.status(200).send('OK');
+});
+router.get('/', (req, res) => {
+  res.status(200).send('OK');
+});
+router.get('/', (req, res) => {
+  res.status(200).send('OK');
+});
+
+router.get('/', (req, res) => {
+  res.status(200).send('OK');
+});
+router.get('/', (req, res) => {
+  res.status(200).send('OK');
+});
+
 
 export default router;
