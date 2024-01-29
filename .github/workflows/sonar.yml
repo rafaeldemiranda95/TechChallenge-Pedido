@@ -33,5 +33,4 @@ jobs:
           args:
             -Dsonar.projectKey=rafaeldemiranda95_TechChallenge-Pedido
             -Dsonar.organization=rafaeldemiranda95
-            -Dsonar.scanner.force-deprecated-java-version=true
             -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
