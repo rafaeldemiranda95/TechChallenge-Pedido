@@ -1,4 +1,5 @@
 import { ProdutoRepository } from '../../../../adapter/driven/infra/ProdutoRepository';
+import { Produto } from '../../models/Produto';
 export class ProdutoUseCase {
   constructor(private produtoRepository: ProdutoRepository) {}
   async cadastrarProduto(produto: any, res: any) {
@@ -26,16 +27,16 @@ export class ProdutoUseCase {
     }
   }
 
-  async listarProdutoPorId(id: number, res: any) {
+  async listarProdutoPorId(id: number, res: any): Promise<Produto | null> {
     try {
       const produto = await this.produtoRepository.exibirPorId(id);
       if (produto == null || produto == undefined) {
-        res.status(404).send('Produto não encontrado');
+        return null;
       } else {
-        res.status(200).send(produto);
+        return produto;
       }
-    } catch (error: any) {
-      throw new Error(error);
+    } catch (error) {
+      throw new Error('Erro ao buscar produto no repositório');
     }
   }
 
@@ -45,9 +46,9 @@ export class ProdutoUseCase {
         categoria
       );
       if (produtos.length == 0 || produtos == undefined) {
-        throw new Error('Categoria não encontrada');
+        return [];
       } else {
-        res.status(200).send(produtos);
+        return produtos;
       }
     } catch (error: any) {
       throw new Error(error);
@@ -57,16 +58,20 @@ export class ProdutoUseCase {
   async alterarProduto(produto: any, res: any) {
     try {
       const produtoAlterado = await this.produtoRepository.alterar(produto);
-      res.status(200).send(produtoAlterado);
+      if (produtoAlterado == null || produtoAlterado == undefined) {
+        return null;
+      } else {
+        return produtoAlterado;
+      }
     } catch (error: any) {
       throw new Error(error.message);
     }
   }
 
-  async apagarProduto(id: number, res: any) {
+  async apagarProduto(id: number, res: any): Promise<string | null> {
     try {
       await this.produtoRepository.apagar(id);
-      res.status(200).send('Produto excluído');
+      return 'Produto excluído';
     } catch (error: any) {
       throw new Error(error.message);
     }

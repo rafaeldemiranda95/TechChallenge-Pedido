@@ -110,24 +110,22 @@ describe('ProdutoUseCase', () => {
       mockProdutoRepository.exibirPorId.mockResolvedValue(mockProduto);
       const id = 1;
 
-      await produtoUseCase.listarProdutoPorId(id, mockRes);
+      const resultado = await produtoUseCase.listarProdutoPorId(id, mockRes);
 
-      expect(mockRes.status).toHaveBeenCalledWith(200);
-      expect(mockRes.send).toHaveBeenCalledWith(mockProduto);
+      expect(resultado).toEqual(mockProduto);
     });
 
     it('deve enviar um status 404 quando o produto não é encontrado', async () => {
       mockProdutoRepository.exibirPorId.mockResolvedValue(undefined);
       const id = 1;
 
-      await produtoUseCase.listarProdutoPorId(id, mockRes);
+      const resultado = await produtoUseCase.listarProdutoPorId(id, mockRes);
 
-      expect(mockRes.status).toHaveBeenCalledWith(404);
-      expect(mockRes.send).toHaveBeenCalledWith('Produto não encontrado');
+      expect(resultado).toBeNull();
     });
 
     it('deve lançar um erro quando ocorre um erro na busca do produto', async () => {
-      const errorMessage = 'Erro na busca do produto';
+      const errorMessage = 'Erro ao buscar produto no repositório';
       mockProdutoRepository.exibirPorId.mockRejectedValue(
         new Error(errorMessage)
       );
@@ -166,19 +164,24 @@ describe('ProdutoUseCase', () => {
       ];
       mockProdutoRepository.exibirPorCategoria.mockResolvedValue(mockProdutos);
 
-      await produtoUseCase.listarProdutoPorCategoria(categoria, mockRes);
+      const resultado = await produtoUseCase.listarProdutoPorCategoria(
+        categoria,
+        mockRes
+      );
 
-      expect(mockRes.status).toHaveBeenCalledWith(200);
-      expect(mockRes.send).toHaveBeenCalledWith(mockProdutos);
+      expect(resultado).toEqual(mockProdutos);
     });
 
     it('deve lançar um erro quando nenhum produto é encontrado na categoria', async () => {
       const categoria = 'Categoria Vazia';
       mockProdutoRepository.exibirPorCategoria.mockResolvedValue([]);
 
-      await expect(
-        produtoUseCase.listarProdutoPorCategoria(categoria, mockRes)
-      ).rejects.toThrow('Categoria não encontrada'); // Verifique apenas a mensagem
+      const resultado = await produtoUseCase.listarProdutoPorCategoria(
+        categoria,
+        mockRes
+      );
+
+      expect(resultado).toEqual([]);
     });
 
     it('deve lançar um erro quando ocorre um erro na busca de produtos por categoria', async () => {
@@ -217,13 +220,15 @@ describe('ProdutoUseCase', () => {
       };
       mockProdutoRepository.alterar.mockResolvedValue(mockProduto);
 
-      await produtoUseCase.alterarProduto(produtoParaAlterar, mockRes);
+      const resultado = await produtoUseCase.alterarProduto(
+        produtoParaAlterar,
+        mockRes
+      );
 
       expect(mockProdutoRepository.alterar).toHaveBeenCalledWith(
         produtoParaAlterar
       );
-      expect(mockRes.status).toHaveBeenCalledWith(200);
-      expect(mockRes.send).toHaveBeenCalledWith(mockProduto);
+      expect(resultado).toEqual(mockProduto);
     });
     it('deve lançar um erro quando ocorre um erro na alteração do produto', async () => {
       const produtoParaAlterar = {
@@ -249,11 +254,10 @@ describe('ProdutoUseCase', () => {
       const id = 1;
       mockProdutoRepository.apagar.mockResolvedValue(undefined);
 
-      await produtoUseCase.apagarProduto(id, mockRes);
+      const resultado = await produtoUseCase.apagarProduto(id, mockRes);
 
       expect(mockProdutoRepository.apagar).toHaveBeenCalledWith(id);
-      expect(mockRes.status).toHaveBeenCalledWith(200);
-      expect(mockRes.send).toHaveBeenCalledWith('Produto excluído');
+      expect(resultado).toEqual('Produto excluído');
     });
     it('deve lançar um erro quando ocorre um erro na exclusão do produto', async () => {
       const id = 1;
