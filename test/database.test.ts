@@ -35,6 +35,4 @@ describe('runQuery', () => {
     );
     expect(pool.connect).toHaveBeenCalled();
   });
-
-  // Outros testes conforme necessário
 });
