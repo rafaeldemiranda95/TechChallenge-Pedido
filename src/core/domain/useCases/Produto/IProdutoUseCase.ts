@@ -5,5 +5,5 @@ export interface IProdutoUseCase {
   exibirPorCategoria(categoria: string): Promise<Produto[]>;
   exibirPorId(id: number): Promise<Produto | undefined>;
   alterar(produto: Produto): Promise<Produto>;
-  apagar(id: number): Promise<Produto>;
+  apagar(id: number): Promise<Produto | undefined>;
 }

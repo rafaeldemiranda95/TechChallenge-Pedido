@@ -60,10 +60,13 @@ export class ProdutoRepository implements IProdutoUseCase {
     return returnProduto;
   }
 
-  async apagar(id: number): Promise<Produto> {
+  async apagar(id: number): Promise<Produto | undefined> {
     const query = `DELETE FROM public.produto
     WHEREid = ${id} RETURNING *`;
     const _produto = await runQuery(query);
+    if (_produto.length === 0) {
+      return undefined;
+    }
     let produto: Produto = _produto[0];
     return produto;
   }

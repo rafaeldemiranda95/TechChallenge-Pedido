@@ -1,5 +1,5 @@
-import { Usuario } from '../models/Usuario';
 import { UsuarioRepository } from '../../../adapter/driven/infra/UsuarioRepository';
+import { Usuario } from '../models/Usuario';
 const jwt = require('jsonwebtoken');
 
 export class ObterValoresToken {

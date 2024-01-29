@@ -193,8 +193,76 @@ describe('ProdutoUseCase', () => {
       ).rejects.toThrow(errorMessage);
     });
   });
-  describe('alterarProduto', () => {});
-  describe('apagarProduto', () => {});
+  describe('alterarProduto', () => {
+    it('deve alterar e enviar um produto com sucesso', async () => {
+      const mockProduto = {
+        nome: 'Produto Teste',
+        categoria: 'Categoria Teste',
+        preco: 50.3,
+        descricao: 'Produto muito bom',
+        imagem: '',
+        tempoPreparo: 25,
+        id: 10,
+        quantidade: 2,
+      };
+      const produtoParaAlterar = {
+        nome: 'Produto Teste Alterado',
+        categoria: 'Categoria Teste',
+        preco: 50.3,
+        descricao: 'Produto muito bom',
+        imagem: '',
+        tempoPreparo: 25,
+        id: 10,
+        quantidade: 2,
+      };
+      mockProdutoRepository.alterar.mockResolvedValue(mockProduto);
 
-  // Testes para cada método...
+      await produtoUseCase.alterarProduto(produtoParaAlterar, mockRes);
+
+      expect(mockProdutoRepository.alterar).toHaveBeenCalledWith(
+        produtoParaAlterar
+      );
+      expect(mockRes.status).toHaveBeenCalledWith(200);
+      expect(mockRes.send).toHaveBeenCalledWith(mockProduto);
+    });
+    it('deve lançar um erro quando ocorre um erro na alteração do produto', async () => {
+      const produtoParaAlterar = {
+        nome: 'Produto Teste',
+        categoria: 'Categoria Teste',
+        preco: 50.3,
+        descricao: 'Produto muito bom',
+        imagem: '',
+        tempoPreparo: 25,
+        id: 10,
+        quantidade: 2,
+      };
+      const errorMessage = 'Erro na alteração do produto';
+      mockProdutoRepository.alterar.mockRejectedValue(new Error(errorMessage));
+
+      await expect(
+        produtoUseCase.alterarProduto(produtoParaAlterar, mockRes)
+      ).rejects.toThrow(new Error(errorMessage));
+    });
+  });
+  describe('apagarProduto', () => {
+    it('deve excluir um produto e enviar resposta de sucesso', async () => {
+      const id = 1;
+      mockProdutoRepository.apagar.mockResolvedValue(undefined);
+
+      await produtoUseCase.apagarProduto(id, mockRes);
+
+      expect(mockProdutoRepository.apagar).toHaveBeenCalledWith(id);
+      expect(mockRes.status).toHaveBeenCalledWith(200);
+      expect(mockRes.send).toHaveBeenCalledWith('Produto excluído');
+    });
+    it('deve lançar um erro quando ocorre um erro na exclusão do produto', async () => {
+      const id = 1;
+      const errorMessage = 'Erro na exclusão do produto';
+      mockProdutoRepository.apagar.mockRejectedValue(new Error(errorMessage));
+
+      await expect(produtoUseCase.apagarProduto(id, mockRes)).rejects.toThrow(
+        new Error(errorMessage)
+      );
+    });
+  });
 });
