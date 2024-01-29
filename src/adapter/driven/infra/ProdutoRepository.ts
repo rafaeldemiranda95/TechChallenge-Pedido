@@ -18,9 +18,13 @@ export class ProdutoRepository implements IProdutoUseCase {
     return produtos;
   }
 
-  async exibirPorId(id: number): Promise<Produto> {
+  async exibirPorId(id: number): Promise<Produto | undefined> {
     const query = `SELECT * FROM public.produto WHERE id = ${id}`;
     const _produto = await runQuery(query);
+
+    if (_produto.length === 0) {
+      return undefined;
+    }
 
     let produto: Produto = _produto[0];
 

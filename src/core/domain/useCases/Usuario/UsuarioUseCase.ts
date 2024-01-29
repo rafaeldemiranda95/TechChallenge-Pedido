@@ -20,10 +20,11 @@ export class UsuarioUseCase {
     try {
       await this.usuarioRepository.salvar(usuario);
     } catch (error: any) {
-      let errorType = JSON.parse(error.message);
-      if (errorType.code == 'P2002') {
-        throw new Error(errorType.field);
-      }
+      throw new Error(error.message);
+      // let errorType = JSON.parse(error.message);
+      // if (errorType.code == 'P2002') {
+      // throw new Error(errorType.field);
+      // }
     }
   }
 
@@ -38,7 +39,8 @@ export class UsuarioUseCase {
         res.status(200).send(verificaUsuario);
       }
     } catch (error: any) {
-      console.log(error);
+      // console.log(error);
+      throw new Error(error.message);
     }
   }
   async autenticaCliente(usuario: Usuario, res: any) {
@@ -52,7 +54,7 @@ export class UsuarioUseCase {
         res.status(200).send(verificaUsuario);
       }
     } catch (error: any) {
-      console.log(error);
+      throw new Error(error.message);
     }
   }
 
@@ -61,7 +63,7 @@ export class UsuarioUseCase {
       let tokenValido = await this.usuarioRepository.validarToken(token);
       return tokenValido;
     } catch (error: any) {
-      console.log(error);
+      throw new Error(error.message);
     }
   }
 }
