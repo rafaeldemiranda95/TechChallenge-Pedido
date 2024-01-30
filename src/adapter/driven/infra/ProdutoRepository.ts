@@ -44,7 +44,7 @@ export class ProdutoRepository implements IProdutoUseCase {
     }
   }
 
-  async alterar(produto: Produto): Promise<Produto> {
+  async alterar(produto: Produto): Promise<Produto | undefined> {
     const query = `UPDATE public.produto
     SET nome='${produto.nome}', categoria='${produto.categoria}', preco=${produto.preco}, descricao='${produto.descricao}', imagem='${produto.imagem}'
     WHERE id = ${produto.id}  RETURNING *`;

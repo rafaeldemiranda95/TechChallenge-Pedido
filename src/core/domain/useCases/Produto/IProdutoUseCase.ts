@@ -4,6 +4,6 @@ export interface IProdutoUseCase {
   exibirLista(): Promise<Produto[]>;
   exibirPorCategoria(categoria: string): Promise<Produto[]>;
   exibirPorId(id: number): Promise<Produto | undefined>;
-  alterar(produto: Produto): Promise<Produto>;
+  alterar(produto: Produto): Promise<Produto | undefined>;
   apagar(id: number): Promise<Produto | undefined>;
 }

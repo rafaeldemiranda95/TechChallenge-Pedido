@@ -52,6 +52,19 @@ describe('ProdutoUseCase', () => {
   });
 
   describe('listarProdutos', () => {
+    it('deve enviar status 404 quando não há produtos', async () => {
+      // Configurar o mock para retornar uma lista vazia
+      mockProdutoRepository.exibirLista.mockResolvedValue([]);
+
+      // Chamar o método do useCase
+      await produtoUseCase.listarProdutos(mockRes);
+
+      // Verificar se o status 404 foi enviado
+      expect(mockRes.status).toHaveBeenCalledWith(404);
+      expect(mockRes.send).toHaveBeenCalledWith(
+        'Não foram encontrados produtos'
+      );
+    });
     it('deve retornar uma lista de produtos', async () => {
       const mockProdutos = [
         {
@@ -197,6 +210,36 @@ describe('ProdutoUseCase', () => {
     });
   });
   describe('alterarProduto', () => {
+    it('deve retornar null quando o produto não é alterado', async () => {
+      // Configurar o mock para retornar null
+      mockProdutoRepository.alterar.mockResolvedValue(undefined);
+
+      // Simular um produto para alterar
+      const produtoParaAlterar = {
+        nome: 'Produto Teste Alterado',
+        categoria: 'Categoria Teste',
+        preco: 50.3,
+        descricao: 'Produto muito bom',
+        imagem: '',
+        tempoPreparo: 25,
+        id: 10,
+        quantidade: 2,
+      };
+
+      // Chamar o método do useCase
+      const resultado = await produtoUseCase.alterarProduto(
+        produtoParaAlterar,
+        mockRes
+      );
+
+      // Verificar se o método do repositório foi chamado corretamente
+      expect(mockProdutoRepository.alterar).toHaveBeenCalledWith(
+        produtoParaAlterar
+      );
+
+      // Verificar se o resultado é null
+      expect(resultado).toBeNull();
+    });
     it('deve alterar e enviar um produto com sucesso', async () => {
       const mockProduto = {
         nome: 'Produto Teste',
