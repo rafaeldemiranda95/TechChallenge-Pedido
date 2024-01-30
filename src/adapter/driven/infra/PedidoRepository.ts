@@ -17,9 +17,6 @@ export class PedidoRepository implements IPedidoUseCase {
       let query = `INSERT INTO public.pedido(status, usuarioId, total, tempoEspera) 
       VALUES ('${pedido.status}', ${pedido.usuario.id}, ${pedido.total}, ${pedido.tempoEspera}) RETURNING *`;
       let _pedidoInsert = await runQuery(query);
-
-      // console.log('_pedidoInsert  ==>>  ', _pedidoInsert);
-
       if (_pedidoInsert.length > 0) {
         let pedidoInsert = _pedidoInsert[0];
         for (let pedidoProduto of pedido.produto) {
@@ -29,10 +26,8 @@ export class PedidoRepository implements IPedidoUseCase {
             await runQuery(query02);
           }
         }
-
         pedido.id = pedidoInsert.id;
         await this.enviarParaFila(pedido);
-        // await this.criarPagamento(pedido);
         let retorno = {
           tempoEspera: pedido.tempoEspera,
           status: pedido.status,
@@ -44,18 +39,4 @@ export class PedidoRepository implements IPedidoUseCase {
       throw new Error(error.message);
     }
   }
-  // async criarPagamento(pedido: Pedido): Promise<void> {
-  //   try {
-  //     await prisma.pagamento.create({
-  //       data: {
-  //         pedidoId: pedido.id ? pedido.id : 0,
-  //         valor: pedido.total ? pedido.total : 0,
-  //         status: 'Pendente',
-  //         usuarioId: pedido.usuario.id,
-  //       },
-  //     });
-  //   } catch (error: any) {
-  //     console.log('error', error);
-  //   }
-  // }
 }

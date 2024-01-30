@@ -21,10 +21,6 @@ export class UsuarioUseCase {
       await this.usuarioRepository.salvar(usuario);
     } catch (error: any) {
       throw new Error(error.message);
-      // let errorType = JSON.parse(error.message);
-      // if (errorType.code == 'P2002') {
-      // throw new Error(errorType.field);
-      // }
     }
   }
 
@@ -39,7 +35,6 @@ export class UsuarioUseCase {
         res.status(200).send(verificaUsuario);
       }
     } catch (error: any) {
-      // console.log(error);
       throw new Error(error.message);
     }
   }

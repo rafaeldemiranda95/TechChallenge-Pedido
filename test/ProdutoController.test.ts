@@ -225,7 +225,6 @@ describe('ProdutoController - cadastrarProduto', () => {
   });
   describe('apagarProduto', () => {
     it('deve excluir um produto e enviar resposta de sucesso', async () => {
-      // Definir o comportamento esperado do mock
       mockProdutoUseCase.apagarProduto.mockResolvedValue(
         'Produto excluído com sucesso'
       );

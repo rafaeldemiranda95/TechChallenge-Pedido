@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { CPF } from '../src/core/domain/valueObjects/cpf'; // Importe a classe CPF aqui
+import { CPF } from '../src/core/domain/valueObjects/cpf';
 
 describe('CPF', () => {
   describe('Validação de CPF', () => {

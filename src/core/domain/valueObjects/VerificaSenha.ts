@@ -1,10 +1,6 @@
 import crypto from 'crypto';
 
 export class VerificaSenha {
-  // constructor(senha: string, senhaHash: string) {
-  //     this.verificaSenha(senha, senhaHash);
-  // }
-
   async verificaSenha(senha: string, senhaHash: string): Promise<boolean> {
     const [hash, salt] = senhaHash.split(':');
     const derivedKey = await this.pbkdf2Async(

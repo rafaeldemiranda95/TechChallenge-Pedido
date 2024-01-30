@@ -2,12 +2,6 @@ import jwt from 'jsonwebtoken';
 import { UsuarioRepository } from '../src/adapter/driven/infra/UsuarioRepository';
 import { Usuario } from '../src/core/domain/models/Usuario';
 
-// var jwt = require('jsonwebtoken');
-
-// jest.mock('../src/config/database', () => ({
-//   runQuery: jest.fn(),
-// }));
-
 jest.mock('../src/config/database');
 jest.mock('jsonwebtoken', () => ({
   sign: jest.fn(),
@@ -19,16 +13,14 @@ describe('UsuarioRepository', () => {
   const mockToken = 'new-mock-token';
 
   beforeEach(() => {
-    // jest.resetModules(); // Resetar todos os módulos
     usuarioRepository = new UsuarioRepository();
-    jest.clearAllMocks(); // Limpar todos os mocks
-    require('../src/config/database').runQuery.mockClear(); // Limpar mock específico
+    jest.clearAllMocks();
+    require('../src/config/database').runQuery.mockClear();
     jest.spyOn(jwt, 'sign').mockClear();
   });
 
   describe('obterUsuarioPorId', () => {
     it('deve retornar um usuário quando o ID existe na base de dados', async () => {
-      // Configurar o mock de runQuery para simular um usuário existente na base de dados
       const mockUsuario = {
         id: 1,
         nome: 'Usuário de Teste',
@@ -53,17 +45,15 @@ describe('UsuarioRepository', () => {
     });
 
     it('deve retornar undefined quando o ID não existe na base de dados', async () => {
-      // Configurar o mock de runQuery para simular nenhum resultado
       require('../src/config/database').runQuery.mockResolvedValue([]);
 
-      const userId = 999; // Um ID que não existe na base de dados de teste
+      const userId = 999;
       const resultado = await usuarioRepository.obterUsuarioPorId(userId);
 
       expect(resultado).toBeUndefined();
     });
 
     it('deve lançar um erro em caso de falha na consulta', async () => {
-      // Configurar o mock de runQuery para simular uma exceção
       const errorMessage = 'Erro na consulta SQL';
       require('../src/config/database').runQuery.mockRejectedValue(
         new Error(errorMessage)
@@ -73,10 +63,8 @@ describe('UsuarioRepository', () => {
       try {
         await usuarioRepository.obterUsuarioPorId(userId);
 
-        // Se a função não lançar um erro, o teste falhará
         fail('A função deveria lançar um erro.');
       } catch (error) {
-        // Verificar se o erro corresponde à mensagem de erro esperada
         expect((error as Error).message).toEqual(errorMessage);
       }
     });
@@ -87,7 +75,6 @@ describe('UsuarioRepository', () => {
       require('../src/config/database').runQuery.mockResolvedValue([
         mockUsuario,
       ]);
-      // mockJwtSign.mockReturnValue('new-mock-token');
       mockJwtSign.mockImplementation(() => 'new-mock-token');
 
       const newToken = await usuarioRepository.renovarToken(mockToken);
@@ -121,7 +108,7 @@ describe('UsuarioRepository', () => {
   });
   describe('validarToken', () => {
     it('deve retornar true quando um usuário é encontrado com o token fornecido', async () => {
-      require('../src/config/database').runQuery.mockResolvedValue([{ id: 1 }]); // Simula um usuário encontrado
+      require('../src/config/database').runQuery.mockResolvedValue([{ id: 1 }]);
 
       const resultado = await usuarioRepository.validarToken(mockToken);
 
@@ -129,7 +116,7 @@ describe('UsuarioRepository', () => {
     });
 
     it('deve retornar false quando nenhum usuário é encontrado com o token fornecido', async () => {
-      require('../src/config/database').runQuery.mockResolvedValue([]); // Simula nenhum usuário encontrado
+      require('../src/config/database').runQuery.mockResolvedValue([]);
 
       const resultado = await usuarioRepository.validarToken(mockToken);
 
@@ -160,17 +147,6 @@ describe('UsuarioRepository', () => {
 
       expect(token).toBeUndefined();
     });
-    // it('deve lançar um erro em caso de falha na consulta ao banco de dados', async () => {
-    //   const mockUsuario = new Usuario('admin@test.com', 'senha123', 'admin');
-    //   const errorMessage = 'Erro na consulta SQL';
-    //   require('../src/config/database').runQuery.mockRejectedValue(
-    //     new Error(errorMessage)
-    //   );
-
-    //   await expect(
-    //     usuarioRepository.autenticaAdministrador(mockUsuario)
-    //   ).rejects.toThrow(errorMessage);
-    // });
   });
   describe('autenticaCliente', () => {
     it('deve retornar um token quando o cliente é autenticado com sucesso', async () => {

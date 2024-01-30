@@ -14,20 +14,16 @@ export class ProdutoRepository implements IProdutoUseCase {
     const query = `SELECT * FROM produto WHERE categoria = '${categoria}'`;
     const _produtos = await runQuery(query);
     let produtos: Produto[] = _produtos;
-
     return produtos;
   }
 
   async exibirPorId(id: number): Promise<Produto | undefined> {
     const query = `SELECT * FROM public.produto WHERE id = ${id}`;
     const _produto = await runQuery(query);
-
     if (_produto.length === 0) {
       return undefined;
     }
-
     let produto: Produto = _produto[0];
-
     return produto;
   }
 
@@ -37,7 +33,6 @@ export class ProdutoRepository implements IProdutoUseCase {
         nome, categoria, preco, descricao, imagem)
         VALUES ('${produto.nome}', '${produto.categoria}', ${produto.preco}, '${produto.descricao}', '${produto.imagem} RETURNING *');`;
       let _returnProduto = await runQuery(query);
-
       if (_returnProduto.length > 0) {
         let returnProduto: Produto = _returnProduto[0];
         return returnProduto;
@@ -45,7 +40,6 @@ export class ProdutoRepository implements IProdutoUseCase {
         return undefined;
       }
     } catch (error: any) {
-      console.log('error  ==>>  ', error);
       throw new Error(error.message);
     }
   }

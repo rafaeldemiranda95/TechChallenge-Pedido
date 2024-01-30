@@ -1,6 +1,5 @@
-// import { expect } from 'chai';
-import assert from 'assert'; // Importe o módulo assert aqui
-import { GerarHash } from '../src/core/domain/valueObjects/GerarHash'; // Importe a classe GerarHash aqui
+import assert from 'assert';
+import { GerarHash } from '../src/core/domain/valueObjects/GerarHash';
 
 describe('GerarHash', () => {
   it('deve gerar um hash válido', async () => {
@@ -10,7 +9,6 @@ describe('GerarHash', () => {
     const hashComSalt = await gerador.gerarHash(senha);
     const partes = hashComSalt.split(':');
 
-    // Use assert para verificar as condições
     assert.strictEqual(partes.length, 2, 'Deve ter duas partes');
     assert.strictEqual(
       typeof partes[0],
@@ -32,7 +30,6 @@ describe('GerarHash', () => {
     const hash1 = await gerador.gerarHash(senha1);
     const hash2 = await gerador.gerarHash(senha2);
 
-    // Use assert para verificar se os hashes são diferentes
     assert.notStrictEqual(hash1, hash2, 'Os hashes devem ser diferentes');
   });
 });

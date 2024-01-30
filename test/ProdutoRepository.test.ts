@@ -1,7 +1,6 @@
 import { ProdutoRepository } from '../src/adapter/driven/infra/ProdutoRepository';
 import { Produto } from '../src/core/domain/models/Produto';
 
-// Mocking da função runQuery
 jest.mock('../src/config/database', () => ({
   runQuery: jest.fn(),
 }));
@@ -10,7 +9,6 @@ describe('ProdutoRepository - exibirLista', () => {
   let produtoRepository: ProdutoRepository;
 
   beforeEach(() => {
-    // Reinicia o estado do repositório e limpa os mocks antes de cada teste
     produtoRepository = new ProdutoRepository();
     jest.clearAllMocks();
   });

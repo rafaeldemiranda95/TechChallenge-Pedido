@@ -9,12 +9,7 @@ export class UsuarioRepository implements IUsuarioUseCase {
   async obterUsuarioPorId(id: number): Promise<Usuario | undefined> {
     try {
       const query = `SELECT * FROM usuario WHERE id = ${id}`;
-      // const values = [id];
-
       const result = await runQuery(query);
-
-      // console.log('result  ==>>  ', result);
-
       if (result.length > 0) {
         const usuario = result[0];
         return new Usuario(
@@ -37,20 +32,11 @@ export class UsuarioRepository implements IUsuarioUseCase {
   async renovarToken(token: string): Promise<string | undefined> {
     let query = `select * from public.usuario where token = '${token}'`;
     let _getUsuarioDb = await runQuery(query);
-    // let getUsuarioDb = await prisma.usuario.findUnique({
-    //   where: {
-    //     token: token,
-    //   },
-    // });
     if (_getUsuarioDb.length > 0) {
       let getUsuarioDb = _getUsuarioDb[0];
       let token = jwt.sign({ id: getUsuarioDb.id }, process.env.JWT_SECRET, {
         expiresIn: null,
       });
-      // await prisma.usuario.update({
-      //   where: { id: getUsuarioDb.id },
-      //   data: { token: token },
-      // });
       return token;
     } else {
       return undefined;
@@ -60,11 +46,6 @@ export class UsuarioRepository implements IUsuarioUseCase {
   async validarToken(token: string): Promise<boolean | undefined> {
     let query = `select * from public.usuario where token = '${token}'`;
     let _getUsuarioDb = await runQuery(query);
-    // let getUsuarioDb = await prisma.usuario.findUnique({
-    //   where: {
-    //     token: token,
-    //   },
-    // });
     if (_getUsuarioDb.length > 0) {
       return true;
     } else {
@@ -76,8 +57,6 @@ export class UsuarioRepository implements IUsuarioUseCase {
     try {
       let query = `select * from public.usuario where email = '${usuario.email}'`;
       let _getUsuarioDb = await runQuery(query);
-      // console.log(_getUsuarioDb);
-
       if (_getUsuarioDb.length > 0) {
         let getUsuarioDb = _getUsuarioDb[0];
         if (usuario.senha != undefined && getUsuarioDb.senha != undefined) {
@@ -95,11 +74,6 @@ export class UsuarioRepository implements IUsuarioUseCase {
                 expiresIn: '365d',
               }
             );
-            // await prisma.usuario.update({
-            //   where: { id: getUsuarioDb.id },
-            //   data: { token: token },
-            // });
-
             let saveQuery = `UPDATE public.usuario SET token = '${token}' where id = ${getUsuarioDb.id};`;
             await runQuery(saveQuery);
             return token;

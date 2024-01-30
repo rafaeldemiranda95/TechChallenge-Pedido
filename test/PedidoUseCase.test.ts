@@ -63,7 +63,6 @@ describe('PedidoUseCase', () => {
       const response = await pedidoUseCase.enviarPedido(pedidoMock);
 
       expect(response).toEqual(pedidoMock);
-      // Verifique se o total e o tempo de preparo foram calculados corretamente
       expect(pedidoMock.total).toBe(20);
       expect(pedidoMock.tempoEspera).toBe(0);
     });
@@ -78,7 +77,6 @@ describe('PedidoUseCase', () => {
         10
       );
 
-      // Configurar o mock de ProdutoRepository para retornar produtos com tempo de preparo
       const produtoMock = {
         id: 1,
         nome: 'Produto 1',
@@ -87,18 +85,13 @@ describe('PedidoUseCase', () => {
         descricao: 'Descrição',
         imagem: 'imagem.jpg',
         tempoPreparo: 15,
-        // outros campos se necessário
       };
 
       mockProdutoRepository.exibirPorId.mockResolvedValueOnce(produtoMock);
 
-      // Adicione mais mocks se necessário para cobrir diferentes produtos no pedido
-
       await pedidoUseCase.enviarPedido(pedidoMock);
 
-      // Verifique se o tempo de preparo foi calculado corretamente
       expect(pedidoMock.tempoEspera).toBe(0);
     });
   });
-  // Testes a seguir...
 });
