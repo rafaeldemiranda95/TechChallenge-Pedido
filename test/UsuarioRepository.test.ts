@@ -2,17 +2,21 @@ import jwt from 'jsonwebtoken';
 import { UsuarioRepository } from '../src/adapter/driven/infra/UsuarioRepository';
 import { Usuario } from '../src/core/domain/models/Usuario';
 
-jest.mock('../src/config/database');
+jest.mock('./../src/config/database', () => ({
+  runQuery: jest.fn(),
+}));
 jest.mock('jsonwebtoken', () => ({
   sign: jest.fn(),
 }));
 
+const { runQuery } = require('./../src/config/database');
 describe('UsuarioRepository', () => {
   let usuarioRepository: UsuarioRepository;
   const mockJwtSign = jest.spyOn(jwt, 'sign');
   const mockToken = 'new-mock-token';
 
   beforeEach(() => {
+    runQuery.mockReset();
     usuarioRepository = new UsuarioRepository();
     jest.clearAllMocks();
     require('../src/config/database').runQuery.mockClear();
@@ -124,6 +128,35 @@ describe('UsuarioRepository', () => {
     });
   });
   describe('autenticaAdministrador', () => {
+    it('deve lançar um erro quando ocorre um problema na consulta ao banco de dados', async () => {
+      const usuarioMock: Usuario = {
+        nome: 'Nome do Usuário',
+        email: 'email@example.com',
+        senha: 'senha123',
+        cpf: '123.456.789-00',
+      };
+      const erroEsperado = new Error('Erro de consulta ao banco de dados');
+      runQuery.mockRejectedValue(erroEsperado);
+
+      await expect(
+        usuarioRepository.autenticaAdministrador(usuarioMock)
+      ).rejects.toThrow(erroEsperado);
+    });
+    it('deve retornar undefined quando o usuário não é encontrado', async () => {
+      const usuarioMock: Usuario = {
+        nome: 'Nome do Usuário',
+        email: 'email@example.com',
+        senha: 'senha123',
+        cpf: '123.456.789-50',
+      };
+      runQuery.mockResolvedValue([{ senha: undefined }]);
+
+      const resultado = await usuarioRepository.autenticaAdministrador(
+        usuarioMock
+      );
+
+      expect(resultado).toBeUndefined();
+    });
     test('deve autenticar um administrador e retornar um token', async () => {
       const usuarioMock: Usuario = {
         nome: 'Nome do Usuário',

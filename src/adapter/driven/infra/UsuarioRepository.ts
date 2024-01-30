@@ -59,6 +59,8 @@ export class UsuarioRepository implements IUsuarioUseCase {
       let _getUsuarioDb = await runQuery(query);
       if (_getUsuarioDb.length > 0) {
         let getUsuarioDb = _getUsuarioDb[0];
+        console.log('getUsuarioDb   ===>>>  ', getUsuarioDb);
+        console.log('usuario.senha   ===>>>  ', getUsuarioDb.senha);
         if (usuario.senha != undefined && getUsuarioDb.senha != undefined) {
           let validaSenha = new VerificaSenha();
           if (validaSenha) {
@@ -78,9 +80,8 @@ export class UsuarioRepository implements IUsuarioUseCase {
             await runQuery(saveQuery);
             return token;
           }
-        } else {
-          return undefined;
         }
+        return undefined;
       }
     } catch (err: any) {
       throw err;
