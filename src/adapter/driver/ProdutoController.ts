@@ -13,7 +13,6 @@ export class ProdutoController {
     res: any
   ) {
     try {
-      // Adicionar validação de entrada aqui se necessário
       const produto = new Produto(nome, categoria, preco, descricao, imagem);
       const produtoCriado = await this.produtoUseCase.cadastrarProduto(
         produto,
@@ -21,7 +20,7 @@ export class ProdutoController {
       );
       res.status(201).send(produtoCriado);
     } catch (error) {
-      res.status(500).send('Erro ao cadastrar produto');
+      throw new Error('Erro ao cadastrar produto');
     }
   }
 
@@ -30,7 +29,7 @@ export class ProdutoController {
       const produtos = await this.produtoUseCase.listarProdutos(res);
       res.status(200).send(produtos);
     } catch (error) {
-      res.status(500).send('Erro ao buscar produtos');
+      throw new Error('Erro ao buscar produtos');
     }
   }
 
@@ -42,7 +41,7 @@ export class ProdutoController {
       }
       res.status(200).send(produto);
     } catch (error) {
-      res.status(500).send('Erro ao buscar produto');
+      throw new Error('Erro ao buscar produto');
     }
   }
 
@@ -57,7 +56,7 @@ export class ProdutoController {
       }
       res.status(200).send(produtos);
     } catch (error) {
-      res.status(500).send('Erro ao buscar produtos por categoria');
+      throw new Error('Erro ao buscar produtos por categoria');
     }
   }
 
@@ -85,12 +84,12 @@ export class ProdutoController {
       );
 
       if (!produtoAlterado) {
-        return res.status(404).send('Produto não encontrado ou não alterado');
+        throw new Error('Produto não encontrado ou não alterado');
       }
 
       res.status(200).send(produtoAlterado);
     } catch (error) {
-      res.status(500).send('Erro ao alterar produto');
+      throw error;
     }
   }
 
@@ -99,12 +98,12 @@ export class ProdutoController {
       const resultado = await this.produtoUseCase.apagarProduto(id, res);
 
       if (!resultado) {
-        return res.status(404).send('Produto não encontrado ou não excluído');
+        throw new Error('Produto não encontrado ou não excluído');
       }
 
       res.status(200).send('Produto excluído com sucesso');
     } catch (error) {
-      res.status(500).send('Erro ao excluir produto');
+      throw error;
     }
   }
 }

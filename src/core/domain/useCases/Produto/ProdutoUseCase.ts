@@ -14,10 +14,10 @@ export class ProdutoUseCase {
     }
   }
 
-  async listarProdutos(res: any) {
+  async listarProdutos(res: any): Promise<Produto[] | undefined | void> {
     try {
       const produtos = await this.produtoRepository.exibirLista();
-      if (produtos.length == 0 || produtos == undefined) {
+      if (produtos.length == 0) {
         res.status(404).send('Não foram encontrados produtos');
       } else {
         res.status(200).send(produtos);
@@ -58,7 +58,7 @@ export class ProdutoUseCase {
   async alterarProduto(produto: any, res: any) {
     try {
       const produtoAlterado = await this.produtoRepository.alterar(produto);
-      if (produtoAlterado == null || produtoAlterado == undefined) {
+      if (produtoAlterado == null) {
         return null;
       } else {
         return produtoAlterado;
